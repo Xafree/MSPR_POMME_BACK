@@ -44,9 +44,10 @@ public class ProductService {
         Product productToUpdate = repository.findById(product.getId()).orElse(null);
 
         if ( productToUpdate != null ) {
-            product.setTypeProduit(product.getTypeProduit());
+            product.setType(product.getType());
             product.setDescription(product.getDescription());
-            product.setCodeProduit(product.getCodeProduit());
+            product.setBarcode(product.getBarcode());
+            product.setPrix(product.getPrix());
             repository.save(productToUpdate);
         }
 
