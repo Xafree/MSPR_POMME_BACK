@@ -4,10 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor
@@ -15,7 +13,12 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String typeProduit;
+    private String type;
     private String description;
-    private long codeProduit;
+    private long barcode;
+    private float prix;
+    @OneToMany(mappedBy = "product")
+    private List<Coupon> coupons;
+    @OneToMany(mappedBy = "product")
+    private List<Order> orders;
 }
