@@ -24,6 +24,6 @@ public class Client {
     @OneToOne
     private Client_space client_space;
     @OneToMany(mappedBy = "client")
-    private List<Order> orders;
+    private List<Orders> orders;
 
 }
