@@ -20,5 +20,5 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<Coupon> coupons;
     @OneToMany(mappedBy = "product")
-    private List<Order> orders;
+    private List<Orders> orders;
 }
