@@ -2,6 +2,7 @@ package com.gostyle.webservice.service;
 
 import com.gostyle.webservice.dao.CouponRepository;
 import com.gostyle.webservice.entities.Coupon;
+import com.gostyle.webservice.dto.CouponReturned;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,10 @@ public class CouponService {
 
     public Coupon getCouponById(int id){
         return repository.findById(id).orElse(null);
+    }
+
+    public List<CouponReturned> getCouponResponse(int idProduit){
+        return repository.returnCouponByProductId_1(idProduit);
     }
 
     public List<Coupon> getCoupons(){
