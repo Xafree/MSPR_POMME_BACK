@@ -1,5 +1,6 @@
 package com.gostyle.webservice.controller;
 
+import com.gostyle.webservice.entities.Client;
 import com.gostyle.webservice.entities.Client_space;
 import com.gostyle.webservice.service.Client_spaceService;
 import com.gostyle.webservice.dto.CustomResponseBody;
@@ -25,7 +26,18 @@ public class Client_spaceController {
             List<Client_space> resultSearchLogin = service.getLogin(mailClientSpaceToCreate);
 
             if (resultSearchLogin.size() == 0) {
-                service.addClient_space(client_space);
+                // 1 - is already Client ?
+                List<Client> listClientsWithSameLogin = service.findClientByMail(mailClientSpaceToCreate);
+
+                // 2 - If is already client, update the client_id of Client_space
+                if ( listClientsWithSameLogin.size() == 1 ) {
+                    Client clientWithSameLogin = listClientsWithSameLogin.get(0);
+                    client_space.setClient(clientWithSameLogin);
+                }
+
+                // 3 - Create space client
+                Client_space newClientSpace = service.addClient_space(client_space);
+
                 CustomResponseBody response = new CustomResponseBody(200, "OK", "Created", "/client_space/create");
                 return new ResponseEntity(response, HttpStatus.OK);
             } else {
@@ -72,28 +84,6 @@ public class Client_spaceController {
         }
     }
 
-
-/*
-    @GetMapping("/client_space/{id}")
-    public Client_space getClient_spaceById(@PathVariable int id){
-        return service.getClient_spaceById(id);
-    }
-*/
-/*
-    @GetMapping("/client_space/{login_mail}")
-    public ResponseEntity<List<Client_space>> getClient_spaceByLogin(@PathVariable String login_mail){
-
-        List<Client_space> loginTab = service.getLogin(login_mail);
-
-        if ( loginTab.size() == 0 ) {
-            CustomResponseBody response = new CustomResponseBody(204,"No Content", "","/client_space/login");
-            return new ResponseEntity(response, HttpStatus.NOT_FOUND);
-        } else {
-            CustomResponseBody response = new CustomResponseBody(200,"OK", "","/client_space/login");
-            return new ResponseEntity(loginTab, HttpStatus.OK);
-        }
-    }
-*/
     @GetMapping("/client_spaces")
     public List<Client_space> getClient_spaces(){
         return  service.getClient_spaces();

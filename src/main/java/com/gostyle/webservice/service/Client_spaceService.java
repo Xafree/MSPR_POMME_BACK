@@ -1,6 +1,7 @@
 package com.gostyle.webservice.service;
 
 import com.gostyle.webservice.dao.Client_spaceRepository;
+import com.gostyle.webservice.entities.Client;
 import com.gostyle.webservice.entities.Client_space;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,14 @@ public class Client_spaceService {
 
     public List<Client_space> getLogin(String login_mail) {
         return repository.findByLogin_mail(login_mail);
+    }
+
+    public void updateClient_SpaceSetClientIdForLogin(int id_ClientSpace, String login_mail){
+        repository.updateClient_SpaceSetClientIdForLogin(id_ClientSpace, login_mail);
+    }
+
+    public List<Client> findClientByMail(String mail) {
+        return repository.findClientByMail(mail);
     }
 
 }
