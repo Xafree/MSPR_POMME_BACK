@@ -22,8 +22,8 @@ public class CouponService {
         return repository.findById(id).orElse(null);
     }
 
-    public List<CouponReturned> getCouponResponse(int idProduit){
-        return repository.returnCouponByProductId_1(idProduit);
+    public List<CouponReturned> getCouponResponse(int idCoupon){
+        return repository.returnCouponByProductId_1(idCoupon);
     }
 
     public List<Coupon> getCoupons(){

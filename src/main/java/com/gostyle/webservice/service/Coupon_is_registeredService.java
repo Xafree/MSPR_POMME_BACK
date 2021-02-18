@@ -17,6 +17,20 @@ public class Coupon_is_registeredService {
         return repository.save(coupon_is_registered);
     }
 
+    public List<Coupon_is_registered> findCoupon_is_registeredByIds(int idSpace_client, int idCoupon_is_consulted){
+        return repository.findCoupon_is_registeredByIds(idSpace_client, idCoupon_is_consulted);
+    }
+
+    public String deleteCouponInSpaceClientById(int idCoupon_is_registered) {
+        if ( repository.existsById(idCoupon_is_registered) ) {
+            repository.deleteById(idCoupon_is_registered);
+            return "success";
+        }
+        else {
+            return "not exists";
+        }
+    }
+
     public Coupon_is_registered getCoupon_is_registeredById(int id){
         return repository.findById(id).orElse(null);
     }

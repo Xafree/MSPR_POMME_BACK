@@ -15,6 +15,7 @@ public class Coupon_is_consulted {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private String stringDateRef;
     private Date date;
     @ManyToOne
     private Coupon coupon;
