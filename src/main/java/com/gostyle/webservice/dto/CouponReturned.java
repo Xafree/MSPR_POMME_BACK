@@ -1,8 +1,12 @@
 package com.gostyle.webservice.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CouponReturned {
     // Coupon id
     private int id;

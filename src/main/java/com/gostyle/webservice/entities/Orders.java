@@ -11,6 +11,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Orders {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -18,4 +19,7 @@ public class Orders {
     private Product product;
     @ManyToOne
     private Client client;
+    private int numOrder;
+    private float totalPrice;
+
 }

@@ -170,4 +170,20 @@ public class Coupon_is_registeredController {
         return  service.getCoupons_are_registered();
     }
 
+    @DeleteMapping("/coupon_is_registered/{idClientSpace}/{idCoupon_is_consulted}")
+    public ResponseEntity<Coupon_is_registered> deleteCoupon_is_registered(
+            @PathVariable int idClientSpace,
+            @PathVariable int idCoupon_is_consulted) {
+
+        try {
+            service.deleteCoupon_is_registeredByIds(idClientSpace, idCoupon_is_consulted);
+            CustomResponseBody response = new CustomResponseBody(200, "OK", "", "/client_space/log");
+            return new ResponseEntity(response, HttpStatus.OK);
+        } catch (Exception e) {
+            CustomResponseBody response = new CustomResponseBody(500, "Internal Server Error", "", "/client_space/id");
+            return new ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
 }
