@@ -61,7 +61,7 @@ public class CouponController {
             } else {
                 LocalDateTime timestamp = LocalDateTime.now();
                 DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-                String stringDateRef = timestamp.format(dateFormatter);
+                String stringDateRef = timestamp.format(dateFormatter).replaceAll("\\s", "_");
 
                 List<CouponReturned> couponReturned = service.getCouponResponse(idCoupon);
 

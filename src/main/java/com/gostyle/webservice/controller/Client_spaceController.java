@@ -18,14 +18,14 @@ public class Client_spaceController {
     private Client_spaceService service;
 
     @PostMapping("/client_space/create")
-    public ResponseEntity<Client_space> addClient_space(@RequestBody Client_space client_space){
+    public ResponseEntity<Client_space> addClient_space(@RequestBody Client_space client_space) {
 
         try {
             // Check whether this space client doesn't already exist before creating it
             String mailClientSpaceToCreate = client_space.getLogin_mail();
             List<Client_space> resultSearchLogin = service.getLogin(mailClientSpaceToCreate);
 
-            if (resultSearchLogin.size() == 0) {
+            if ( resultSearchLogin.size() == 0 ) {
                 // 1 - is already Client ?
                 List<Client> listClientsWithSameLogin = service.findClientByMail(mailClientSpaceToCreate);
 
@@ -52,7 +52,7 @@ public class Client_spaceController {
     }
 
     @PostMapping("/client_space/log")
-    public ResponseEntity<List<Client_space>> getClient_spaceByLogin(@RequestBody Client_space client_space){
+    public ResponseEntity<List<Client_space>> getClient_spaceByLogin(@RequestBody Client_space client_space) {
 
         try {
             String mailClientSpaceToLogIn = client_space.getLogin_mail();
@@ -62,19 +62,19 @@ public class Client_spaceController {
                 CustomResponseBody response = new CustomResponseBody(404, "Not Found", "No client space found with this login", "/client_space/log");
                 return new ResponseEntity(response, HttpStatus.NOT_FOUND);
 
-            } else if ( resultSearchClientSpaceLogin.size() == 1 ){
+            } else if ( resultSearchClientSpaceLogin.size() == 1 ) {
                 String passwordClientSpaceToLogIn = client_space.getPassword();
                 String correctPassword = resultSearchClientSpaceLogin.get(0).getPassword();
                 if ( passwordClientSpaceToLogIn.equals(correctPassword) ) {
-                    CustomResponseBody response = new CustomResponseBody(200,"OK", "","/client_space/log");
+                    CustomResponseBody response = new CustomResponseBody(200, "OK", "", "/client_space/log");
                     return new ResponseEntity(response, HttpStatus.OK);
                 } else {
-                    CustomResponseBody response = new CustomResponseBody(400,"Bad Request", "The password doesn't match the login","/client_space/log");
+                    CustomResponseBody response = new CustomResponseBody(400, "Bad Request", "The password doesn't match the login", "/client_space/log");
                     return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
                 }
 
             } else {
-                CustomResponseBody response = new CustomResponseBody(409,"Conflict", "Multiple client spaces exist with this login","/client_space/log");
+                CustomResponseBody response = new CustomResponseBody(409, "Conflict", "Multiple client spaces exist with this login", "/client_space/log");
                 return new ResponseEntity(response, HttpStatus.CONFLICT);
             }
 
@@ -85,8 +85,21 @@ public class Client_spaceController {
     }
 
     @GetMapping("/client_spaces")
-    public List<Client_space> getClient_spaces(){
-        return  service.getClient_spaces();
+    public List<Client_space> getClient_spaces() {
+        return service.getClient_spaces();
     }
 
+    @DeleteMapping("/client_space/{login_mail}")
+    public ResponseEntity<Client_space> deleteClient_spaceByLogin(@PathVariable String login_mail) {
+
+        try {
+            service.deleteClient_spaceByLogin(login_mail);
+            CustomResponseBody response = new CustomResponseBody(200, "OK", login_mail, "/client_space/log");
+            return new ResponseEntity(response, HttpStatus.OK);
+        } catch (Exception e) {
+            CustomResponseBody response = new CustomResponseBody(500, "Internal Server Error", "", "/client_space/id");
+            return new ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
 }
