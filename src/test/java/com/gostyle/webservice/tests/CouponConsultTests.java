@@ -12,6 +12,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -23,10 +25,48 @@ class CouponConsultTests {
     private HttpResponse httpResponse;
     private int httpStatusCode;
 
-
     @Test
     void contextLoads() {
     }
+
+    @Test
+    @DisplayName("GET  PATH=\"/couponresponse/ville/{ville}\" TEST Return Status 200 with a not null/empty result and no duplicated products, when coupon(s) exist(s) for the city")
+    public void getAllCouponResponseByCity_returnListResult() throws IOException {
+
+        // Arrange
+        String pathVariable = TestService.CITY_WITH_COUPONS_IN_DATABASE;
+        String uri = "http://localhost:8080/couponresponse/ville/" + pathVariable;
+
+        // Act
+        request = new HttpGet(uri);
+        httpResponse = TestService.executeGETRequestAndReturnHttpResponse(request);
+        httpStatusCode = httpResponse.getStatusLine().getStatusCode();
+        CouponReturned[] responseObject = TestService.retrieveObjectFromHttpResponse(CouponReturned[].class, httpResponse);
+
+        // Assert
+        int nbResultFromDatabase = responseObject.length;
+        List<Integer> listProductIds = new ArrayList<>();
+        boolean duplicateProducts = false;
+
+        int productId;
+        for ( CouponReturned couponReturned: responseObject ) {
+            productId = couponReturned.getId();
+            if ( listProductIds.contains(productId) ) {
+                duplicateProducts = true;
+                break;
+            } else {
+                listProductIds.add(productId);
+            }
+        }
+
+        assertTrue(
+                httpStatusCode == HttpStatus.SC_OK
+                && nbResultFromDatabase > 0
+                && !duplicateProducts
+        );
+
+    }
+
 
     @Test
     @DisplayName("GET  PATH=\"/couponresponse/{idCoupon}\" TEST Return Status 200 when coupon exists")

@@ -16,6 +16,8 @@ public class Coupon {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private float prix_pourcentage_reduction;
+    private String codePromo;
+    private String ville;
     @ManyToOne
     private Product product;
     @OneToMany(mappedBy = "coupon")
