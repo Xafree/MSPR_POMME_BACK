@@ -56,7 +56,7 @@ public class CouponController {
         try {
 
             if (idCoupon < 0) {
-                CustomResponseBody response = new CustomResponseBody(400, "Bad Request", "Parameter id cannot be negative", "/coupon/id");
+                CustomResponseBody response = new CustomResponseBody(400, "Bad Request", "Parameter id cannot be negative", "/couponresponse/{idCoupon}");
                 return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
             } else {
                 LocalDateTime timestamp = LocalDateTime.now();
@@ -67,7 +67,7 @@ public class CouponController {
 
                 if ( couponReturned == null || couponReturned.size() == 0 )
                 {
-                    CustomResponseBody response = new CustomResponseBody(204, "No Content", "This coupon doesn't exist", "/coupon/id");
+                    CustomResponseBody response = new CustomResponseBody(204, "No Content", "This coupon doesn't exist", "/couponresponse/{idCoupon}");
                     return new ResponseEntity(response, HttpStatus.NO_CONTENT);
                 }
                 else if ( couponReturned.size() == 1 )
@@ -75,24 +75,46 @@ public class CouponController {
                     // cic_service.insertCoupon_is_consulted(couponReturned.get(0).getId());
                     cic_service.insertCic(idCoupon, stringDateRef);
                     couponReturned.get(0).setStringDateRef(stringDateRef);
-                    CustomResponseBody response = new CustomResponseBody(200, "OK", "Found", "/coupon/id");
+                    CustomResponseBody response = new CustomResponseBody(200, "OK", "Found", "/couponresponse/{idCoupon}");
                     return new ResponseEntity(couponReturned, HttpStatus.OK);
                 } else
                 {
-                    CustomResponseBody response = new CustomResponseBody(406, "Not Acceptable", "The client expected one coupon but the server has found more than one", "/coupon/id");
+                    CustomResponseBody response = new CustomResponseBody(406,
+                            "Not Acceptable",
+                            "The client expected one coupon but the server has found more than one",
+                            "/couponresponse/{idCoupon}");
                     return new ResponseEntity(response, HttpStatus.NOT_ACCEPTABLE);
                 }
             }
         } catch (Exception e) {
-            CustomResponseBody response = new CustomResponseBody(500, "Internal Server Error", "", "/coupon/id");
+            CustomResponseBody response = new CustomResponseBody(500, "Internal Server Error", "", "/couponresponse/{idCoupon}");
             return new ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }
 
-    @GetMapping("/coupons")
-    public List<Coupon> getCoupons(){
-        return service.getCoupons();
+
+    @GetMapping("/couponresponse/ville/{ville}")
+    public ResponseEntity<List<CouponReturned>> getAllCouponResponse(@PathVariable String ville){
+
+        try {
+            List<CouponReturned> couponReturned = service.getAllCouponResponse(ville);
+
+            if ( couponReturned == null || couponReturned.size() == 0 )
+            {
+                CustomResponseBody response = new CustomResponseBody(204, "No Content", "No existing coupon for this city", "/couponresponse/ville/{ville}");
+                return new ResponseEntity(response, HttpStatus.NO_CONTENT);
+            }
+            else
+            {
+                CustomResponseBody response = new CustomResponseBody(200, "OK", "Found", "/couponresponse/ville/{ville}");
+                return new ResponseEntity(couponReturned, HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            CustomResponseBody response = new CustomResponseBody(500, "Internal Server Error", "", "/couponresponse/ville/{ville}");
+            return new ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
 }

@@ -26,6 +26,10 @@ public class CouponService {
         return repository.returnCouponByProductId_1(idCoupon);
     }
 
+    public List<CouponReturned> getAllCouponResponse(String ville) {
+        return repository.findAllCouponsReturned(ville);
+    }
+
     public List<Coupon> getCoupons(){
         return repository.findAll();
     }

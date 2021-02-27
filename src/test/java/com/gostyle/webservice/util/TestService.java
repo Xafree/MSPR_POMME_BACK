@@ -39,9 +39,10 @@ public class TestService {
      * Constants for CouponConsultTests
      */
     // ... Coupons id
-    public static final String EXISTING_COUPON_ID_1    = "12";
-    public static final String EXISTING_COUPON_ID_2    = "20";
-    public static final String NOT_EXISTING_COUPON_ID  = "120";
+    public static final String EXISTING_COUPON_ID_1          = "12";
+    public static final String EXISTING_COUPON_ID_2          = "20";
+    public static final String NOT_EXISTING_COUPON_ID        = "120";
+    public static final String CITY_WITH_COUPONS_IN_DATABASE = "Toulon";
 
     /*
      * DATABASE TABLE = "coupon_is_consulted"
