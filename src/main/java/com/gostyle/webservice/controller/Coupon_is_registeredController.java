@@ -1,5 +1,7 @@
 package com.gostyle.webservice.controller;
 
+import com.gostyle.webservice.dao.Client_spaceDeleteRepository;
+import com.gostyle.webservice.dto.CouponReturned;
 import com.gostyle.webservice.dto.CustomResponseBody;
 import com.gostyle.webservice.entities.Client_space;
 import com.gostyle.webservice.entities.Coupon_is_consulted;
@@ -95,7 +97,7 @@ public class Coupon_is_registeredController {
 
 
     @PostMapping("/clientspace/coupon/delete")
-    public ResponseEntity<Coupon_is_registered> deleteTrain(
+    public ResponseEntity<Coupon_is_registered> delete_Coupon_in_SpaceClient(
             @RequestBody Coupon_is_registered coupon_is_registered
     ){
         try {
@@ -160,9 +162,33 @@ public class Coupon_is_registeredController {
         }
     }
 
-    @GetMapping("/coupon_is_registered/{id}")
-    public Coupon_is_registered getCoupon_is_registeredById(@PathVariable int id){
-        return service.getCoupon_is_registeredById(id);
+   @PostMapping("/clientspace/coupons")
+    public ResponseEntity<CouponReturned> get_Coupons_in_SpaceClient(@RequestBody Coupon_is_registered coupon_is_registered){
+        try {
+
+            String loginEntered = coupon_is_registered
+                    .getClient_space()
+                    .getLogin_mail();
+
+            List<CouponReturned> listCir = service.getAllCouponsRegisteredByLogin(loginEntered);
+
+            if ( listCir == null ) {
+                CustomResponseBody response = new CustomResponseBody(404, "Not Found", "", "/clientspace/coupons");
+                ResponseEntity responseEntity = new ResponseEntity(response, HttpStatus.NOT_FOUND);
+                return responseEntity;
+            } else if ( listCir.size() == 0 ) {
+                CustomResponseBody response = new CustomResponseBody(204, "Not Content", "", "/clientspace/coupons");
+                ResponseEntity responseEntity = new ResponseEntity(response, HttpStatus.NO_CONTENT);
+                return responseEntity;
+            } else {
+                ResponseEntity responseEntity = new ResponseEntity(listCir, HttpStatus.OK);
+                return responseEntity;
+            }
+        } catch (Exception e) {
+            CustomResponseBody response = new CustomResponseBody(500, "Internal Server Error", "", "/clientspace/coupons");
+            ResponseEntity responseEntity = new ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
+            return responseEntity;
+        }
     }
 
     @GetMapping("/coupons_are_registered")

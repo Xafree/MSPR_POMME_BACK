@@ -2,10 +2,11 @@ package com.gostyle.webservice.service;
 
 import com.gostyle.webservice.dao.Coupon_is_registeredDeleteRepository;
 import com.gostyle.webservice.dao.Coupon_is_registeredRepository;
+import com.gostyle.webservice.dao.EntityManagerRepository;
+import com.gostyle.webservice.dto.CouponReturned;
 import com.gostyle.webservice.entities.Coupon_is_registered;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -16,6 +17,8 @@ public class Coupon_is_registeredService {
     private Coupon_is_registeredRepository repository;
     @Autowired
     private Coupon_is_registeredDeleteRepository repositoryDelete;
+    @Autowired
+    private EntityManagerRepository entityManagerRepository;
 
     public Coupon_is_registered addCoupon_is_registered(Coupon_is_registered coupon_is_registered){
         return repository.save(coupon_is_registered);
@@ -33,6 +36,10 @@ public class Coupon_is_registeredService {
         else {
             return "not exists";
         }
+    }
+
+    public List<CouponReturned> getAllCouponsRegisteredByLogin(String login_mail){
+        return entityManagerRepository.findAllCouponByLogin(login_mail);
     }
 
     public void deleteCoupon_is_registeredByIds(int idClientSpace, int idCoupon_is_consulted) {
