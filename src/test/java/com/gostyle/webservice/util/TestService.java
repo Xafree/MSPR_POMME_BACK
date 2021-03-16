@@ -23,46 +23,46 @@ public class TestService {
      * Constants for ClientSpaceManagementTests & CouponRegisterTests
      */
     // ... Logins
-    public static final String  EXISTING_LOGIN_MAIL_1          = "new1@test.com";
+    public static final String  EXISTING_LOGIN_MAIL_1          = "mail1";
     // Constraint for tests: EXISTING_LOGIN_MAIL_2_ID must not be associated with EXISTING_STRING_DATE_REF_ID in coupon_is_registered
-    public static final String  EXISTING_LOGIN_MAIL_2          = "jean.paul@gmail.com";
-    public static final int     EXISTING_LOGIN_MAIL_2_ID       = 13;
-    public static final String  NOT_EXISTING_LOGIN_MAIL_LOG    = "tryToLog@AtNotExistingLogin";
-    public static final String  NOT_EXISTING_LOGIN_MAIL_CREATE = "tryToCreate@ANotExistingLogin";
+    public static final String  EXISTING_LOGIN_MAIL_2          = "mail2";
+    public static final int     EXISTING_LOGIN_MAIL_2_ID       = 2;
+    public static final String  NOT_EXISTING_LOGIN_MAIL_LOG    = "tryToLog@notExistingLogin";
+    public static final String  NOT_EXISTING_LOGIN_MAIL_CREATE = "tryToCreate@notExistingLogin";
     // ... Passwords
-    public static final String  MATCHING_PASSWORD      = "ceciEstMonPassword";
-    public static final String  NOT_MATCHING_PASSWORD  = "NotMatchingPassword";
-    public static final String  CREATE_PASSWORD        = "MyPasswordForTest";
+    public static final String  MATCHING_PASSWORD_LOGIN_1   = "pass1";
+    public static final String  NOT_MATCHING_PASSWORD       = "NotMatchingPassword";
+    public static final String  CREATE_PASSWORD             = "MyPasswordForTest";
 
     /*
      * DATABASE TABLE = "coupon"
      * Constants for CouponConsultTests
      */
     // ... Coupons id
-    public static final String EXISTING_COUPON_ID_1          = "12";
-    public static final String EXISTING_COUPON_ID_2          = "20";
+    public static final String EXISTING_COUPON_ID_1          = "3";
+    public static final String EXISTING_COUPON_ID_2          = "6";
     public static final String NOT_EXISTING_COUPON_ID        = "120";
-    public static final String CITY_WITH_COUPONS_IN_DATABASE = "Toulon";
+    public static final String CITY_WITH_COUPONS_IN_DATABASE = "all";
 
     /*
      * DATABASE TABLE = "coupon_is_consulted"
      * Constants for CouponRegisterTests
      */
     // Constraint for tests: EXISTING_LOGIN_MAIL_2_ID must not be associated with EXISTING_STRING_DATE_REF_ID in coupon_is_registered
-    public static final String  EXISTING_STRING_DATE_REF    = "20-02-2021_23:16:53";
-    public static final int     EXISTING_STRING_DATE_REF_ID = 134;
+    public static final String  EXISTING_STRING_DATE_REF    = "19-03-2021_18:33:29";
+    public static final int     EXISTING_STRING_DATE_REF_ID = 10;
 
     /*
      * DATABASE TABLE = "coupon_is_registered"
      * Constants for CouponRegisterTests
      */
-    // client_space_id = 3 & coupon_is_consulted_id = 16
-    public static final String  MATCHING_LOGIN_WITH_STRING_DATE_REF         = "test1";
-    public static final String  MATCHING_STRING_DATE_REF_WITH_LOGIN         = "20-02-2021_23:14:53";
+    // client_space_id = 12 & coupon_is_consulted_id = 18
+    public static final String  MATCHING_LOGIN_WITH_STRING_DATE_REF         = "mail12";
+    public static final String  MATCHING_STRING_DATE_REF_WITH_LOGIN         = "27-03-2021_18:33:29";
     // Constants for Delete use => To re-insert manually after running the test which delete them
-    // client_space_id = 3 & coupon_is_consulted_id = 131
-    public static final String  MATCHING_LOGIN_WITH_STRING_DATE_REF_DELETED = "new1@test.com";
-    public static final String  MATCHING_STRING_DATE_REF_WITH_LOGIN_DELETED = "20-02-2021_21:29:30";
+    // client_space_id = 4 & coupon_is_consulted_id = 10 (= coupon_is_registered with id = 4)
+    public static final String  MATCHING_LOGIN_WITH_STRING_DATE_REF_DELETED = "mail4";
+    public static final String  MATCHING_STRING_DATE_REF_WITH_LOGIN_DELETED = "19-03-2021_18:33:29";
 
 
     public static HttpResponse executeGETRequestAndReturnHttpResponse(HttpUriRequest request)

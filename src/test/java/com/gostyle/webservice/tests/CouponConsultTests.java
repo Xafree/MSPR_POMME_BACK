@@ -124,16 +124,18 @@ class CouponConsultTests {
 
     /*
      * <!> Test can fail while running with other tests
-     * Test only it to be sure
+     * Try to run run only this
      * To prevent this failure while running with the others test of the class,
      * it can be useful to insert a pause in the thread
+     * Despite all the tricks, run can fail because of Jackson (de)serialization.
+     * As a last resort, you can run in a HTTP client (like Postman).
      */
 
     @Test
     @DisplayName("GET  PATH=\"/couponresponse/{idCoupon}\" TEST CouponReturned also save a Coupon_is_consulted, both sharing the same stringDateRef and IdCoupon")
     public void getCouponResponse_saveAlsoACoupon_is_consulted() throws IOException, InterruptedException {
 
-        Thread.sleep(2000);
+        //Thread.sleep(2000);
         // Arrange
         // ... for CouponReturned (Cr)
         String pathVariableCr = TestService.EXISTING_COUPON_ID_2;
