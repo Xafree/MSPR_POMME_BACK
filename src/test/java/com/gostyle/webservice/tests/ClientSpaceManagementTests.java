@@ -47,7 +47,7 @@ class ClientSpaceManagementTests {
         String uri = "http://localhost:8080/client_space/log";
         // ... body for request
         String login_mail = TestService.EXISTING_LOGIN_MAIL_1;
-        String password = TestService.MATCHING_PASSWORD;
+        String password = TestService.MATCHING_PASSWORD_LOGIN_1;
         String jsonRequestBody = TestService
                                     .retrieveJsonFromClient_SpaceObject(login_mail, password);
 
@@ -112,7 +112,7 @@ class ClientSpaceManagementTests {
      * In this test we create (insert) a client_space
      * To be able to re-run the test without having to do another action,
      * we also delete the client_space just inserted
-     * (if we insert one, then the result will change because it cannot have duplicates in the table)
+     * (if re-run without deleting it, then the result will change because it cannot have duplicates in the table)
      */
 
     @Test

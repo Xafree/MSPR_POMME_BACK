@@ -1,7 +1,7 @@
 package com.gostyle.webservice.service;
 
 import com.gostyle.webservice.dao.Client_spaceRepository;
-import com.gostyle.webservice.dao.Client_spaceDeleteRepository;
+import com.gostyle.webservice.dao.EntityManagerRepository;
 import com.gostyle.webservice.entities.Client;
 import com.gostyle.webservice.entities.Client_space;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ public class Client_spaceService {
     @Autowired
     private Client_spaceRepository repository;
     @Autowired
-    private Client_spaceDeleteRepository repositoryDelete;
+    private EntityManagerRepository entityManagerRepository;
 
     public Client_space addClient_space(Client_space client_space) {
         return repository.save(client_space);
@@ -33,15 +33,11 @@ public class Client_spaceService {
         return repository.findByLogin_mail(login_mail);
     }
 
-    public void updateClient_SpaceSetClientIdForLogin(int id_ClientSpace, String login_mail){
-        repository.updateClient_SpaceSetClientIdForLogin(id_ClientSpace, login_mail);
-    }
-
     public List<Client> findClientByMail(String mail) {
         return repository.findClientByMail(mail);
     }
 
     public void deleteClient_spaceByLogin(String login_mail) {
-        repositoryDelete.deleteClient_spaceByLogin(login_mail);
+        entityManagerRepository.deleteClient_spaceByLogin(login_mail);
     }
 }

@@ -1,6 +1,5 @@
 package com.gostyle.webservice.service;
 
-import com.gostyle.webservice.dao.Coupon_is_registeredDeleteRepository;
 import com.gostyle.webservice.dao.Coupon_is_registeredRepository;
 import com.gostyle.webservice.dao.EntityManagerRepository;
 import com.gostyle.webservice.dto.CouponReturned;
@@ -15,8 +14,6 @@ public class Coupon_is_registeredService {
 
     @Autowired
     private Coupon_is_registeredRepository repository;
-    @Autowired
-    private Coupon_is_registeredDeleteRepository repositoryDelete;
     @Autowired
     private EntityManagerRepository entityManagerRepository;
 
@@ -43,12 +40,7 @@ public class Coupon_is_registeredService {
     }
 
     public void deleteCoupon_is_registeredByIds(int idClientSpace, int idCoupon_is_consulted) {
-        repositoryDelete.deleteCoupon_is_registeredByIds(idClientSpace, idCoupon_is_consulted);
-    }
-
-
-    public Coupon_is_registered getCoupon_is_registeredById(int id){
-        return repository.findById(id).orElse(null);
+        entityManagerRepository.deleteCoupon_is_registeredByIds(idClientSpace, idCoupon_is_consulted);
     }
 
     public List<Coupon_is_registered> getCoupons_are_registered() {

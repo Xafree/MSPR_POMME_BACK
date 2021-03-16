@@ -17,12 +17,7 @@ public class Coupon_is_consultedController {
     public Coupon_is_consulted addCoupon_is_consulted(@RequestBody Coupon_is_consulted coupon_is_consulted){
         return service.addCoupon_is_consulted(coupon_is_consulted);
     }
-/*
-    @GetMapping("/coupon_is_consulted/{id}")
-    public Coupon_is_consulted getCoupon_is_consultedById(@PathVariable int id){
-        return service.getCoupon_is_consultedById(id);
-    }
-*/
+
     @GetMapping("/coupon_is_consulted/{stringDateRef}")
     public List<Coupon_is_consulted> getCoupon_is_consultedByStringDateRef(@PathVariable String stringDateRef){
         return service.findCouponByDate(stringDateRef);

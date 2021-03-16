@@ -10,7 +10,7 @@ import java.util.List;
 
 @RepositoryRestResource
 public interface CouponRepository extends JpaRepository<Coupon, Integer> {
-     // When user get 1 product (via QR Code scan), a coupon is returned with it codePromo
+     // When user get 1 product (via QR Code scan), a coupon is returned with its codePromo
     @Query("SELECT new com.gostyle.webservice.dto.CouponReturned(c.id, p.type, p.description, p.prix, c.prix_pourcentage_reduction, c.codePromo, c.ville) " +
             "FROM Coupon c " +
             "JOIN c.product p " +
