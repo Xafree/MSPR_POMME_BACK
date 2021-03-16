@@ -14,10 +14,6 @@ public class CouponService {
     @Autowired
     private CouponRepository repository;
 
-    public Coupon addCoupon(Coupon coupon){
-        return repository.save(coupon);
-    }
-
     public Coupon getCouponById(int id){
         return repository.findById(id).orElse(null);
     }
@@ -28,10 +24,6 @@ public class CouponService {
 
     public List<CouponReturned> getAllCouponResponse(String ville) {
         return repository.findAllCouponsReturned(ville);
-    }
-
-    public List<Coupon> getCoupons(){
-        return repository.findAll();
     }
 
 }

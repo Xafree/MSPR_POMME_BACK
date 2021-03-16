@@ -19,10 +19,11 @@ public interface Client_spaceRepository extends JpaRepository<Client_space, Inte
     @Query("SELECT c FROM Client c WHERE c.mail = ?1")
     List<Client> findClientByMail(String login_mail);
 
+    /*
     @Modifying
     @Query("UPDATE Client_space cs SET cs.client.id = :client_id WHERE cs.login_mail = :login_mail")
     int updateClient_SpaceSetClientIdForLogin(@Param("client_id") Integer id_ClientSpace,
                                    @Param("login_mail") String login_mail);
-
+   */
 
 }
