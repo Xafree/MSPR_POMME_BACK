@@ -28,6 +28,7 @@ public class ProductController {
         return service.getProductById(id);
     }
 
+    @CrossOrigin
     @GetMapping("/products")
     public List<Product> getProducts(){
         return  service.getProducts();

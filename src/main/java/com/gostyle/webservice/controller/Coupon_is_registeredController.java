@@ -1,6 +1,5 @@
 package com.gostyle.webservice.controller;
 
-import com.gostyle.webservice.dao.Client_spaceDeleteRepository;
 import com.gostyle.webservice.dto.CouponReturned;
 import com.gostyle.webservice.dto.CustomResponseBody;
 import com.gostyle.webservice.entities.Client_space;
@@ -27,7 +26,7 @@ public class Coupon_is_registeredController {
     private Coupon_is_consultedService serviceCic;
 
     @PostMapping("/clientspace/coupon")
-    public ResponseEntity<Coupon_is_registered> add_Coupon_in_SpaceClient(
+    public ResponseEntity<CustomResponseBody> add_Coupon_in_SpaceClient(
             @RequestBody Coupon_is_registered coupon_is_registered
     ){
         try {
@@ -45,9 +44,12 @@ public class Coupon_is_registeredController {
                 List<Coupon_is_consulted> listCoupon_is_consulted = serviceCic.findCouponByDate(dateCoupon_is_consultedEntered);
 
                 if ( listClient_spacesWithLogin.size() == 0 || listCoupon_is_consulted.size() == 0 ) {
-                    CustomResponseBody response = new CustomResponseBody(404, "Not Found",
-                            "No client space found with this login and/or no Coupon_is_consulted found with the date entered", "/clientspace/coupon");
-                    return new ResponseEntity(response, HttpStatus.NOT_FOUND);
+                    CustomResponseBody response = new CustomResponseBody(
+                            404,
+                            "Not Found",
+                            "No client space found with this login and/or no Coupon_is_consulted found with the date entered",
+                            "/clientspace/coupon");
+                    return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
 
                 } else if ( listClient_spacesWithLogin.size() == 1 && listCoupon_is_consulted.size() == 1 ){
                     // Search and find the client_space and coupon_is_consulted ids as they are required in table Coupon_is_registered,
@@ -67,18 +69,18 @@ public class Coupon_is_registeredController {
                     if ( listCirAccordingIds.size() == 0) {
                         service.addCoupon_is_registered(coupon_is_registered);
                         CustomResponseBody response = new CustomResponseBody(200, "OK", "Created", "/clientspace/coupon");
-                        return new ResponseEntity(response, HttpStatus.OK);
+                        return new ResponseEntity<>(response, HttpStatus.OK);
                     } else {
                         CustomResponseBody response = new CustomResponseBody(409, "Conflict",
                                 "Already existing coupon in this client space", "/clientspace/coupon");
-                        return new ResponseEntity(response, HttpStatus.CONFLICT);
+                        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
                     }
 
                 } else {
                     CustomResponseBody response = new CustomResponseBody(409,"Conflict",
                             "Multiple client spaces exist with this login",
                             "/clientspace/coupon");
-                    return new ResponseEntity(response, HttpStatus.CONFLICT);
+                    return new ResponseEntity<>(response, HttpStatus.CONFLICT);
                 }
 
 
@@ -86,18 +88,18 @@ public class Coupon_is_registeredController {
                 CustomResponseBody response = new CustomResponseBody(400, "Bad Request",
                         "mail of the client space is missing or/and the date of coupon_is_consulted",
                         "/clientspace/coupon");
-                return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
             }
 
         } catch (Exception e) {
             CustomResponseBody response = new CustomResponseBody(500, "Internal Server Error", "", "/clientspace/coupon");
-            return new ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
 
     @PostMapping("/clientspace/coupon/delete")
-    public ResponseEntity<Coupon_is_registered> delete_Coupon_in_SpaceClient(
+    public ResponseEntity<CustomResponseBody> delete_Coupon_in_SpaceClient(
             @RequestBody Coupon_is_registered coupon_is_registered
     ){
         try {
@@ -119,7 +121,7 @@ public class Coupon_is_registeredController {
                     CustomResponseBody response = new CustomResponseBody(404, "Not Found",
                             "No client space found with this login and/or no Coupon_is_consulted found with the date entered",
                             "/clientspace/coupon/delete");
-                    return new ResponseEntity(response, HttpStatus.NOT_FOUND);
+                    return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
 
                 } else if ( listClient_spacesWithLogin.size() == 1 && listCoupon_is_consulted.size() == 1 ){
                     // Search and find the client_space and coupon_is_consulted ids as they are required in table Coupon_is_registered,
@@ -134,36 +136,36 @@ public class Coupon_is_registeredController {
                     if ( listCirAccordingIds.size() == 1) {
                         service.deleteCouponInSpaceClientById(listCirAccordingIds.get(0).getId());
                         CustomResponseBody response = new CustomResponseBody(200, "Deleted", "", "/clientspace/coupon/delete");
-                        return new ResponseEntity(response, HttpStatus.OK);
+                        return new ResponseEntity<>(response, HttpStatus.OK);
                     } else {
                         CustomResponseBody response = new CustomResponseBody(404, "Not found",
                                 "Coupon and client space are found but this client space doesn't contain this coupon",
                                 "/clientspace/coupon/delete");
-                        return new ResponseEntity(response, HttpStatus.NOT_FOUND);
+                        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
                     }
 
                 } else {
                     CustomResponseBody response = new CustomResponseBody(409,"Conflict",
                             "Multiple entries are found in database with this client space and coupon",
                             "/clientspace/coupon/delete");
-                    return new ResponseEntity(response, HttpStatus.CONFLICT);
+                    return new ResponseEntity<>(response, HttpStatus.CONFLICT);
                 }
 
             } else {
                 CustomResponseBody response = new CustomResponseBody(400, "Bad Request",
                         "mail of the client space is missing or/and the date of coupon_is_consulted",
                         "/clientspace/coupon/delete");
-                return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
             }
 
         } catch (Exception e) {
             CustomResponseBody response = new CustomResponseBody(500, "Internal Server Error", "", "/clientspace/coupon/delete");
-            return new ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
    @PostMapping("/clientspace/coupons")
-    public ResponseEntity<CouponReturned> get_Coupons_in_SpaceClient(@RequestBody Coupon_is_registered coupon_is_registered){
+    public ResponseEntity get_Coupons_in_SpaceClient(@RequestBody Coupon_is_registered coupon_is_registered){
         try {
 
             String loginEntered = coupon_is_registered
@@ -174,20 +176,16 @@ public class Coupon_is_registeredController {
 
             if ( listCir == null ) {
                 CustomResponseBody response = new CustomResponseBody(404, "Not Found", "", "/clientspace/coupons");
-                ResponseEntity responseEntity = new ResponseEntity(response, HttpStatus.NOT_FOUND);
-                return responseEntity;
+                return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
             } else if ( listCir.size() == 0 ) {
                 CustomResponseBody response = new CustomResponseBody(204, "Not Content", "", "/clientspace/coupons");
-                ResponseEntity responseEntity = new ResponseEntity(response, HttpStatus.NO_CONTENT);
-                return responseEntity;
+                return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
             } else {
-                ResponseEntity responseEntity = new ResponseEntity(listCir, HttpStatus.OK);
-                return responseEntity;
+                return new ResponseEntity<>(listCir, HttpStatus.OK);
             }
         } catch (Exception e) {
             CustomResponseBody response = new CustomResponseBody(500, "Internal Server Error", "", "/clientspace/coupons");
-            ResponseEntity responseEntity = new ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
-            return responseEntity;
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -197,17 +195,17 @@ public class Coupon_is_registeredController {
     }
 
     @DeleteMapping("/coupon_is_registered/{idClientSpace}/{idCoupon_is_consulted}")
-    public ResponseEntity<Coupon_is_registered> deleteCoupon_is_registered(
+    public ResponseEntity<CustomResponseBody> deleteCoupon_is_registered(
             @PathVariable int idClientSpace,
             @PathVariable int idCoupon_is_consulted) {
 
         try {
             service.deleteCoupon_is_registeredByIds(idClientSpace, idCoupon_is_consulted);
             CustomResponseBody response = new CustomResponseBody(200, "OK", "", "/client_space/log");
-            return new ResponseEntity(response, HttpStatus.OK);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             CustomResponseBody response = new CustomResponseBody(500, "Internal Server Error", "", "/client_space/id");
-            return new ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }
