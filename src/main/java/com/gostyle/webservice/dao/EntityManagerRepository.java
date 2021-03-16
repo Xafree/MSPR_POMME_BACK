@@ -2,6 +2,7 @@ package com.gostyle.webservice.dao;
 
 import com.gostyle.webservice.dto.CouponReturned;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -12,6 +13,7 @@ public class EntityManagerRepository {
 
     @PersistenceContext
     private EntityManager entityManager;
+
     public List<CouponReturned> findAllCouponByLogin(String login) {
         List<CouponReturned> list =  entityManager
                 .createNativeQuery(
@@ -26,4 +28,31 @@ public class EntityManagerRepository {
                 .getResultList();
         return list;
     }
+
+    @Transactional
+    public void deleteClient_spaceByLogin(String login) {
+        entityManager
+                .createNativeQuery("DELETE FROM client_space WHERE login_mail = (?)")
+                .setParameter(1, login)
+                .executeUpdate();
+    }
+
+    @Transactional
+    public void insertCoupon_is_consulted(int idCoupon, String date) {
+        entityManager
+                .createNativeQuery("INSERT INTO coupon_is_consulted (coupon_id, string_date_ref) VALUES (?, ?)")
+                .setParameter(1, idCoupon)
+                .setParameter(2, date)
+                .executeUpdate();
+    }
+
+    @Transactional
+    public void deleteCoupon_is_registeredByIds(int idClientSpace, int idCoupon_is_consulted) {
+        entityManager
+                .createNativeQuery("DELETE FROM coupon_is_registered WHERE client_space_id = (?) AND coupon_is_consulted_id = (?)")
+                .setParameter(1, idClientSpace)
+                .setParameter(2, idCoupon_is_consulted)
+                .executeUpdate();
+    }
+
 }
