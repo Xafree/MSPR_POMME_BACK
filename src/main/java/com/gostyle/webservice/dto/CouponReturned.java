@@ -17,6 +17,7 @@ public class CouponReturned {
     private String codePromo;
     private String ville;
 
+    // CouponReturned without codePromo
     public CouponReturned(int id, String type, String description, float prix, float prix_pourcentage_reduction, String ville) {
         this.id = id;
         this.type = type;
@@ -26,6 +27,7 @@ public class CouponReturned {
         this.ville = ville;
     }
 
+    // CouponReturned with codePromo
     public CouponReturned(int id, String type, String description, float prix, float prix_pourcentage_reduction, String codePromo, String ville) {
         this.id = id;
         this.type = type;
