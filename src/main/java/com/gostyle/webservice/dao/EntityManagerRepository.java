@@ -29,6 +29,20 @@ public class EntityManagerRepository {
         return list;
     }
 
+
+    public List<Integer> findAllCouponIdByLogin(int idClient_space){
+        List<Integer> list =  entityManager
+                .createNativeQuery(
+                        "SELECT coupon.id " +
+                                "FROM coupon_is_registered, coupon_is_consulted, coupon " +
+                                "WHERE coupon_is_registered.coupon_is_consulted_id = coupon_is_consulted.id " +
+                                "AND coupon_is_consulted.coupon_id = coupon.id " +
+                                "AND coupon_is_registered.client_space_id = (?)")
+                .setParameter(1, idClient_space)
+                .getResultList();
+        return list;
+    }
+
     @Transactional
     public void deleteClient_spaceByLogin(String login) {
         entityManager
