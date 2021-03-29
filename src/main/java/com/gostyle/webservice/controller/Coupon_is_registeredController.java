@@ -64,15 +64,25 @@ public class Coupon_is_registeredController {
                             .getCoupon_is_consulted()
                             .setId(idCoupon_is_consulted);
 
-                    // The couple idSpace_client/idCoupon_is_consulted must be unique already exists
-                    List<Coupon_is_registered> listCirAccordingIds = service.findCoupon_is_registeredByIds(idSpace_client, idCoupon_is_consulted);
-                    if ( listCirAccordingIds.size() == 0) {
+                    // identify the couponId of the coupon_is_consulted entered
+                    int idCouponEntered = listCoupon_is_consulted
+                                                            .get(0)
+                                                            .getCoupon()
+                                                            .getId();
+
+                    // The couple idSpace_client/idCoupon must be unique
+                    boolean isCouponInClientSpace =  service.isCouponInClientSpace(idCouponEntered, idSpace_client);
+
+                    if ( !isCouponInClientSpace) {
                         service.addCoupon_is_registered(coupon_is_registered);
                         CustomResponseBody response = new CustomResponseBody(200, "OK", "Created", "/clientspace/coupon");
                         return new ResponseEntity<>(response, HttpStatus.OK);
                     } else {
-                        CustomResponseBody response = new CustomResponseBody(409, "Conflict",
-                                "Already existing coupon in this client space", "/clientspace/coupon");
+                        CustomResponseBody response = new CustomResponseBody(
+                                409,
+                                "Conflict",
+                                "Already existing coupon in this client space",
+                                "/clientspace/coupon");
                         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
                     }
 

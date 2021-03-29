@@ -25,6 +25,12 @@ public class Coupon_is_registeredService {
         return repository.findCoupon_is_registeredByIds(idSpace_client, idCoupon_is_consulted);
     }
 
+    public boolean isCouponInClientSpace(int idCouponEntered, int idClient_space){
+        List<Integer> listCouponIdByLogin = entityManagerRepository.findAllCouponIdByLogin(idClient_space);
+        boolean isCouponInClientSpace = listCouponIdByLogin.contains(idCouponEntered);
+        return isCouponInClientSpace;
+    }
+
     public String deleteCouponInSpaceClientById(int idCoupon_is_registered) {
         if ( repository.existsById(idCoupon_is_registered) ) {
             repository.deleteById(idCoupon_is_registered);
