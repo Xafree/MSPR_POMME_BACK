@@ -50,4 +50,4 @@ jobs:
         app-name: 'apicoupons'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_ea386fa6f12648bfb046d2e3d7d36dca }}
-        package: '${{ github.workspace }}/build/libs/*.jar'
+        package: '/build/libs/*.jar'
