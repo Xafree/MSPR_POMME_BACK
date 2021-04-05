@@ -21,8 +21,8 @@ jobs:
       with:
         java-version: '11'
 
-    - name: Build with Maven
-      run: mvn clean install
+    - name: Build with Gradle
+      run: gradle clean build -x test
 
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v2
@@ -50,4 +50,4 @@ jobs:
         app-name: 'apicoupons'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_ea386fa6f12648bfb046d2e3d7d36dca }}
-        package: '*.jar'
+        package: '${{ github.workspace }}/build/libs/*.jar'
