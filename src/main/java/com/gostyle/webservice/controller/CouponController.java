@@ -45,7 +45,7 @@ public class CouponController {
     }
 
 
-    @GetMapping("/couponresponse/{idCoupon}")
+    @GetMapping("/private/couponresponse/{idCoupon}")
     public ResponseEntity getCouponResponse(@PathVariable int idCoupon){
 
         try {

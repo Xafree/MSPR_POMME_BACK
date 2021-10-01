@@ -59,7 +59,6 @@ class ClientSpaceManagementTests {
 
         // Assert
         assertEquals(HttpStatus.SC_OK, httpStatusCode);
-
     }
 
     @Test

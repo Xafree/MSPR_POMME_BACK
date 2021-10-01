@@ -29,7 +29,7 @@ public class ProductController {
     }
 
     @CrossOrigin
-    @GetMapping("/products")
+    @GetMapping("/private/products")
     public List<Product> getProducts(){
         return  service.getProducts();
     }
